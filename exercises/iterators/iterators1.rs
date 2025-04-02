@@ -9,17 +9,16 @@
 // Execute `rustlings hint iterators1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 fn main() {
     let my_fav_fruits = vec!["banana", "custard apple", "avocado", "peach", "raspberry"];
 
-    let mut my_iterable_fav_fruits = ???;   // TODO: Step 1
-
-    assert_eq!(my_iterable_fav_fruits.next(), Some(&"banana"));
-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 2
-    assert_eq!(my_iterable_fav_fruits.next(), Some(&"avocado"));
-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 3
-    assert_eq!(my_iterable_fav_fruits.next(), Some(&"raspberry"));
-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 4
+    let indexes = vec![0, 0, 2, 0, 4, 0];
+    let mut my_iterable_fav_fruits = indexes.into_iter().map(|i| my_fav_fruits[i]);
+    assert_eq!(my_iterable_fav_fruits.next(), Some("banana"));
+    assert_eq!(my_iterable_fav_fruits.next(), Some("banana"));     // TODO: Step 2
+    assert_eq!(my_iterable_fav_fruits.next(), Some("avocado"));
+    assert_eq!(my_iterable_fav_fruits.next(), Some("banana"));     // TODO: Step 3
+    assert_eq!(my_iterable_fav_fruits.next(), Some("raspberry"));
+    assert_eq!(my_iterable_fav_fruits.next(), Some("banana"));     // TODO: Step 4
 }
