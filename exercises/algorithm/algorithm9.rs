@@ -1,9 +1,3 @@
-/*
-	heap
-	This question requires you to implement a binary heap function
-*/
-// I AM NOT DONE
-
 use std::cmp::Ord;
 use std::default::Default;
 
@@ -37,7 +31,19 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        self.items.push(value);
+        self.count += 1;
+        self.bubble_up(self.count);
+    }
+
+    fn bubble_up(&mut self, idx: usize) {
+        let mut current = idx;
+        let mut parent = self.parent_idx(current);
+        while current > 1 && (self.comparator)(&self.items[current], &self.items[parent]) {
+            self.items.swap(current, parent);
+            current = parent;
+            parent = self.parent_idx(current);
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,8 +63,15 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        if self.right_child_idx(idx) > self.count {
+            self.left_child_idx(idx)
+        } else {
+            if (self.comparator)(&self.items[self.left_child_idx(idx)], &self.items[self.right_child_idx(idx)]) {
+                self.left_child_idx(idx)
+            } else {
+                self.right_child_idx(idx)
+            }
+        }
     }
 }
 
@@ -84,8 +97,26 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+        let result = self.items.swap_remove(1);
+        self.count -= 1;
+        self.bubble_down(1);
+        Some(result)
+    }
+}
+
+fn bubble_down(&mut self, idx: usize) {
+    let mut current = idx;
+    while self.children_present(current) {
+        let smallest = self.smallest_child_idx(current);
+        if (self.comparator)(&self.items[smallest], &self.items[current]) {
+            self.items.swap(current, smallest);
+            current = smallest;
+        } else {
+            break;
+        }
     }
 }
 
