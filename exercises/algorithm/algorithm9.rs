@@ -73,6 +73,19 @@ where
             }
         }
     }
+
+    fn bubble_down(&mut self, idx: usize) {
+        let mut current = idx;
+        while self.children_present(current) {
+            let smallest = self.smallest_child_idx(current);
+            if (self.comparator)(&self.items[smallest], &self.items[current]) {
+                self.items.swap(current, smallest);
+                current = smallest;
+            } else {
+                break;
+            }
+        }
+    }
 }
 
 impl<T> Heap<T>
@@ -104,19 +117,6 @@ where
         self.count -= 1;
         self.bubble_down(1);
         Some(result)
-    }
-}
-
-fn bubble_down(&mut self, idx: usize) {
-    let mut current = idx;
-    while self.children_present(current) {
-        let smallest = self.smallest_child_idx(current);
-        if (self.comparator)(&self.items[smallest], &self.items[current]) {
-            self.items.swap(current, smallest);
-            current = smallest;
-        } else {
-            break;
-        }
     }
 }
 
@@ -182,4 +182,4 @@ mod tests {
         heap.add(1);
         assert_eq!(heap.next(), Some(2));
     }
-}
+}    
